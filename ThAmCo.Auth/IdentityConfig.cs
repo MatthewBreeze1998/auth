@@ -25,7 +25,11 @@ namespace ThAmCo.Auth
         {
             return new ApiResource[]
             {
-                new ApiResource("thamco_account_api", "ThAmCo Account Management")
+                new ApiResource("thamco_account_api", "ThAmCo Account Management"),
+                new ApiResource("ReSaleApi","webservice")
+                {
+                    UserClaims = {"name", "role" }
+                }
             };
         }
 
@@ -33,6 +37,51 @@ namespace ThAmCo.Auth
         {
             return new Client[]
             {
+                new Client
+                {
+                     ClientId = "ReSaleApi",
+                     ClientName = "ResaleWebervice",
+                     AllowedGrantTypes = GrantTypes.ClientCredentials,
+
+                     ClientSecrets =
+                    {
+                        new Secret("secrect".Sha256())
+                    },
+
+                     AllowedScopes=
+                    {
+                        "thamco_acount_api"
+                    },
+
+                     RequireConsent = false
+                },
+                
+                new Client
+                {
+                    ClientId = "ReSaleApi",
+                    ClientName = "ResaleWebervice",
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
+
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    
+                    AllowedScopes =
+                    {
+                        // allowes crud users
+                        "thamco_acount_api",
+                        //allwoes you to use api
+                        "ReSaleAPI",
+                        //
+                        "openid",
+                        "profile",
+                        "roles"
+                    },
+                
+                    RequireConsent = false
+                }
+            
             };
         }
     }

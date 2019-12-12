@@ -20,7 +20,7 @@ namespace ThAmCo.Auth.Data.Account
             var userManager = services.GetRequiredService<UserManager<AppUser>>();
 
             AppUser[] users = {
-                new AppUser { UserName = "admin@example.com", Email = "admin@example.com", FullName = "Example Admin User" },
+                new AppUser { UserName = "admin@example.com", Email = "admin@example.com", FullName = "Example Manager User" },
                 new AppUser { UserName = "staff@example.com", Email = "staff@example.com", FullName = "Example Staff User" },
                 new AppUser { UserName = "bob@example.com", Email = "bob@example.com", FullName = "Robert 'Bobby' Robertson" },
                 new AppUser { UserName = "betty@example.com", Email = "betty@example.com", FullName = "Bethany 'Betty' Roberts"  }
@@ -33,7 +33,7 @@ namespace ThAmCo.Auth.Data.Account
                 await userManager.ConfirmEmailAsync(user, token);
             }
 
-            await userManager.AddToRoleAsync(users[0], "Admin");
+            await userManager.AddToRoleAsync(users[0], "Manager");
             await userManager.AddToRoleAsync(users[1], "Staff");
             await userManager.AddToRoleAsync(users[2], "Customer");
             await userManager.AddToRoleAsync(users[3], "Customer");

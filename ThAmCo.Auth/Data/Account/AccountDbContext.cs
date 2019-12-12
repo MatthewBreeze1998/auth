@@ -24,9 +24,9 @@ namespace ThAmCo.Auth.Data.Account
             builder.Entity<AppRole>().HasData(
                 new AppRole
                 {
-                    Name = "Admin",
-                    NormalizedName = "ADMIN",
-                    Descriptor = "ThAmCo Administrators"
+                    Name = "Manager",
+                    NormalizedName = "Manager",
+                    Descriptor = "ThAmCo Manager"
                 },
                 new AppRole
                 {

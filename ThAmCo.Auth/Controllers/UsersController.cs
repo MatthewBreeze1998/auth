@@ -13,7 +13,7 @@ using ThAmCo.Auth.Models;
 namespace ThAmCo.Auth.Controllers
 {
     [ApiController]
-    [Authorize(AuthenticationSchemes = "thamco_account_api")]
+    [Authorize(AuthenticationSchemes = "ReSaleApi")]
     public class UsersController : ControllerBase
     {
         private UserManager<AppUser> UserManager { get; }

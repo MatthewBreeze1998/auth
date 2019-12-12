@@ -25,7 +25,7 @@ namespace ThAmCo.Auth
         {
             return new ApiResource[]
             {
-                new ApiResource("thamco_account_api", "ThAmCo Account Management"),
+                new ApiResource("ReSaleApi", "ThAmCo Account Management"),
                 new ApiResource("ReSaleApi","webservice")
                 {
                     UserClaims = {"name", "role" }
@@ -40,7 +40,7 @@ namespace ThAmCo.Auth
                 new Client
                 {
                      ClientId = "ReSaleApi",
-                     ClientName = "ResaleWebervice",
+                     ClientName = "ReSaleWebervice",
                      AllowedGrantTypes = GrantTypes.ClientCredentials,
 
                      ClientSecrets =
@@ -50,16 +50,19 @@ namespace ThAmCo.Auth
 
                      AllowedScopes=
                     {
-                        "thamco_acount_api"
+                        "ReSaleApi"
                     },
 
                      RequireConsent = false
                 },
                 
-                new Client
-                {
-                    ClientId = "ReSaleApi",
-                    ClientName = "ResaleWebervice",
+
+
+                // this is for webservices 
+               /*new Client
+               {
+                   ClientId = "",
+                    ClientName = "",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
 
                     ClientSecrets =
@@ -80,7 +83,7 @@ namespace ThAmCo.Auth
                     },
                 
                     RequireConsent = false
-                }
+                }*/
             
             };
         }

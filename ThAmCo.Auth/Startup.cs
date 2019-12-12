@@ -67,9 +67,9 @@ namespace ThAmCo.Auth
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddAuthentication()
-                    .AddJwtBearer("thamco_account_api", options =>
+                    .AddJwtBearer("ReSaleApi", options =>
                     {
-                        options.Audience = "thamco_account_api";
+                        options.Audience = "ReSaleApi"; // change to current api
                         options.Authority = "https://localhost:5099";
                     });
 
@@ -81,7 +81,7 @@ namespace ThAmCo.Auth
                     .AddInMemoryApiResources(Configuration.GetIdentityApis())
                     .AddInMemoryClients(Configuration.GetIdentityClients())
                     .AddAspNetIdentity<AppUser>()
-                    .AddDeveloperSigningCredential();
+                   .AddDeveloperSigningCredential();// needs to change for to datebase for tookens to be saved 
             // TODO: developer signing cert above should be replaced with a real one
             // TODO: should use AddOperationalStore to persist tokens between app executions
         }

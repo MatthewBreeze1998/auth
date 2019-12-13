@@ -39,7 +39,7 @@ namespace ThAmCo.Auth
             {
                 new Client
                 {
-                     ClientId = "ReSaleApi",
+                     ClientId = "ReSaleAPI",
                      ClientName = "ReSaleWebervice",
                      AllowedGrantTypes = GrantTypes.ClientCredentials,
 
@@ -50,7 +50,7 @@ namespace ThAmCo.Auth
 
                      AllowedScopes=
                     {
-                        "ReSaleApi"
+                        "ReSaleAPI"
                     },
 
                      RequireConsent = false
@@ -58,11 +58,11 @@ namespace ThAmCo.Auth
                 
 
 
-                // this is for webservices 
-               /*new Client
+                
+               new Client
                {
-                   ClientId = "",
-                    ClientName = "",
+                   ClientId = "my_web_app",
+                    ClientName = "Example Web App",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
 
                     ClientSecrets =
@@ -83,7 +83,7 @@ namespace ThAmCo.Auth
                     },
                 
                     RequireConsent = false
-                }*/
+                }
             
             };
         }

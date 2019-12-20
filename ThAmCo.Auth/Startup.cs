@@ -67,9 +67,9 @@ namespace ThAmCo.Auth
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddAuthentication()
-                    .AddJwtBearer("ReSaleApi", options =>
+                    .AddJwtBearer("thamco_acount_api", options =>
                     {
-                        options.Audience = "ReSaleApi"; // change to current api
+                        options.Audience = "thamco_acount_api"; // change to current api
                         options.Authority = "https://localhost:5099";
                     });
 

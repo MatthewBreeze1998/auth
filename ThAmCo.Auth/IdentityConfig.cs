@@ -25,8 +25,8 @@ namespace ThAmCo.Auth
         {
             return new ApiResource[]
             {
-                new ApiResource("ReSaleApi", "ThAmCo Account Management"),
-                new ApiResource("ReSaleApi","webservice")
+                new ApiResource("thamco_account_api", "ThAmCo Account Management"),
+                new ApiResource("ReSale_Link","webservice")
                 {
                     UserClaims = {"name", "role" }
                 }
@@ -39,18 +39,18 @@ namespace ThAmCo.Auth
             {
                 new Client
                 {
-                     ClientId = "ReSaleAPI",
+                     ClientId = "ReSale_Link",
                      ClientName = "ReSaleWebervice",
                      AllowedGrantTypes = GrantTypes.ClientCredentials,
 
                      ClientSecrets =
                     {
-                        new Secret("secrect".Sha256())
+                        new Secret("secret".Sha256())
                     },
 
                      AllowedScopes=
                     {
-                        "ReSaleAPI"
+                        "thamco_account_api"
                     },
 
                      RequireConsent = false
@@ -75,7 +75,7 @@ namespace ThAmCo.Auth
                         // allowes crud users
                         "thamco_acount_api",
                         //allwoes you to use api
-                        "ReSaleAPI",
+                        "ReSale_Link",
                         //
                         "openid",
                         "profile",

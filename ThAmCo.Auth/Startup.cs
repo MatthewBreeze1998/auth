@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -76,7 +77,12 @@ namespace ThAmCo.Auth
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // configure IdentityServer (provides OpenId Connect and OAuth2)
-            services.AddIdentityServer()
+            services.AddIdentityServer(/*options => 
+            {
+                options.IssuerUri = authority;
+                options.PublicOrigin = authority;
+
+            }*/)
                     .AddInMemoryIdentityResources(Configuration.GetIdentityResources())
                     .AddInMemoryApiResources(Configuration.GetIdentityApis())
                     .AddInMemoryClients(Configuration.GetIdentityClients())
@@ -104,6 +110,14 @@ namespace ThAmCo.Auth
             app.UseCookiePolicy();
             app.UseAuthentication();
 
+            var forwardOptions = new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedFor,
+                RequireHeaderSymmetry = false
+            };
+            forwardOptions.KnownNetworks.Clear();
+            forwardOptions.KnownProxies.Clear();
+            app.UseForwardedHeaders(forwardOptions);
             // use IdentityServer middleware during HTTP requests
             app.UseIdentityServer();
             

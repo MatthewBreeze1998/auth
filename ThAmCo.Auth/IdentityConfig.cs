@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using IdentityServer4;
 using IdentityServer4.Models;
 using Microsoft.Extensions.Configuration;
 
@@ -15,9 +16,10 @@ namespace ThAmCo.Auth
 
                 new IdentityResources.Profile(),
 
-                new IdentityResource(name: "roles",
+                new IdentityResource("roles", new[] {"role"}
+                                     /*name: "roles",
                                      displayName: "ThAmCo Application Roles",
-                                     claimTypes: new [] { "role" })
+                                     claimTypes: new [] { "role" }*/)
             };
         }
 
@@ -26,7 +28,7 @@ namespace ThAmCo.Auth
             return new ApiResource[]
             {
                 new ApiResource("thamco_account_api", "ThAmCo Account Management"),
-                new ApiResource("ReSale_Link","webservice")
+                new ApiResource("Api_Link","webservice")
                 {
                     UserClaims = {"name", "role" }
                 }
@@ -39,8 +41,8 @@ namespace ThAmCo.Auth
             {
                 new Client
                 {
-                     ClientId = "ReSale_Link",
-                     ClientName = "ReSaleWebervice",
+                     ClientId = "Api_Link",
+                     ClientName = "Webervice",
                      AllowedGrantTypes = GrantTypes.ClientCredentials,
 
                      ClientSecrets =
@@ -55,10 +57,10 @@ namespace ThAmCo.Auth
 
                      RequireConsent = false
                 },
-                
 
 
-                
+
+
                new Client
                {
                    ClientId = "my_web_app",
@@ -69,22 +71,23 @@ namespace ThAmCo.Auth
                     {
                         new Secret("secret".Sha256())
                     },
-                    
+
                     AllowedScopes =
                     {
-                        // allowes crud users
-                        "thamco_acount_api",
+                       IdentityServerConstants.StandardScopes.OpenId, 
+                       // allowes crud users
+                        "thamco_account_api",
                         //allwoes you to use api
-                        "ReSale_Link",
+                        "Api_Link",
                         //
                         "openid",
                         "profile",
                         "roles"
                     },
-                
+
                     RequireConsent = false
                 }
-            
+
             };
         }
     }

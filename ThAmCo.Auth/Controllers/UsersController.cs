@@ -34,6 +34,7 @@ namespace ThAmCo.Auth.Controllers
                 UserName = u.UserName,
                 Email = u.Email,
                 FullName = u.FullName
+           
             });
             return Ok(dto);
         }

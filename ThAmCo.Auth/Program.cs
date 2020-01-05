@@ -19,19 +19,17 @@ namespace ThAmCo.Auth
             {
                 var services = scope.ServiceProvider;
                 var env = services.GetRequiredService<IHostingEnvironment>();
-                if (env.IsDevelopment())
+               
+                var context = services.GetRequiredService<AccountDbContext>();
+                context.Database.Migrate();
+                try
                 {
-                    var context = services.GetRequiredService<AccountDbContext>();
-                    context.Database.Migrate();
-                    try
-                    {
-                        AccountDbInitialiser.SeedTestData(context, services).Wait();
-                    }
-                    catch (Exception)
-                    {
-                        var logger = services.GetRequiredService<ILogger<Program>>();
-                        logger.LogDebug("Seeding test account data failed.");
-                    }
+                    AccountDbInitialiser.SeedTestData(context, services).Wait();
+                }
+                catch (Exception)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogDebug("Seeding test account data failed.");
                 }
             }
 

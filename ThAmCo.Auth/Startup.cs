@@ -19,12 +19,15 @@ namespace ThAmCo.Auth
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment hosting)
         {
             Configuration = configuration;
+            env = hosting;
         }
 
         private IConfiguration Configuration { get; }
+
+        private IHostingEnvironment env { get; set; }
 
         public void ConfigureServices(IServiceCollection services)
         {

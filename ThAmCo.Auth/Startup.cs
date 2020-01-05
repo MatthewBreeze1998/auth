@@ -19,15 +19,15 @@ namespace ThAmCo.Auth
 {
     public class Startup
     {
+        private IConfiguration Configuration { get; }
+
+        private IHostingEnvironment env { get; set; }
+
         public Startup(IConfiguration configuration, IHostingEnvironment hosting)
         {
             Configuration = configuration;
             env = hosting;
         }
-
-        private IConfiguration Configuration { get; }
-
-        private IHostingEnvironment env { get; set; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -68,29 +68,31 @@ namespace ThAmCo.Auth
                 options.SignIn.RequireConfirmedEmail = false;
             });
 
+            string authAddress = Configuration.GetSection("UrlConnections")["Auth"];
+
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddAuthentication()
-                    .AddJwtBearer("thamco_acount_api", options =>
+                    .AddJwtBearer("thamco_account_api", options =>
                     {
-                        options.Audience = "thamco_acount_api"; // change to current api
-                        options.Authority = "https://localhost:5099";
+                        options.Audience = "thamco_account_api"; // change to current api
+                        options.Authority = authAddress;
+                        options.RequireHttpsMetadata = false;
                     });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // configure IdentityServer (provides OpenId Connect and OAuth2)
-            services.AddIdentityServer(/*options => 
+            services.AddIdentityServer(options => 
             {
-                options.IssuerUri = authority;
-                options.PublicOrigin = authority;
-
-            }*/)
-                    .AddInMemoryIdentityResources(Configuration.GetIdentityResources())
-                    .AddInMemoryApiResources(Configuration.GetIdentityApis())
-                    .AddInMemoryClients(Configuration.GetIdentityClients())
-                    .AddAspNetIdentity<AppUser>()
-                   .AddDeveloperSigningCredential();// needs to change for to datebase for tookens to be saved 
+                options.IssuerUri = authAddress;
+                options.PublicOrigin = authAddress;
+            })
+            .AddInMemoryIdentityResources(Configuration.GetIdentityResources())
+            .AddInMemoryApiResources(Configuration.GetIdentityApis())
+            .AddInMemoryClients(Configuration.GetIdentityClients())
+            .AddAspNetIdentity<AppUser>()
+            .AddDeveloperSigningCredential();// needs to change for to datebase for tookens to be saved 
             // TODO: developer signing cert above should be replaced with a real one
             // TODO: should use AddOperationalStore to persist tokens between app executions
         }
@@ -115,7 +117,7 @@ namespace ThAmCo.Auth
 
             var forwardOptions = new ForwardedHeadersOptions
             {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedFor,
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
                 RequireHeaderSymmetry = false
             };
             forwardOptions.KnownNetworks.Clear();

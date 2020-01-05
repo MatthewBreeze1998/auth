@@ -46,24 +46,21 @@ namespace ThAmCo.Auth
                      AllowedGrantTypes = GrantTypes.ClientCredentials,
 
                      ClientSecrets =
-                    {
+                     {
                         new Secret("secret".Sha256())
-                    },
+                     },
 
                      AllowedScopes=
-                    {
+                     {
                         "thamco_account_api"
-                    },
+                     },
 
                      RequireConsent = false
                 },
 
-
-
-
                new Client
                {
-                   ClientId = "my_web_app",
+                    ClientId = "my_web_app",
                     ClientName = "Example Web App",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
 
@@ -80,7 +77,6 @@ namespace ThAmCo.Auth
                         //allwoes you to use api
                         "Api_Link",
                         //
-                        "openid",
                         "profile",
                         "roles"
                     },

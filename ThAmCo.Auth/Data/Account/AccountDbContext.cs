@@ -8,6 +8,7 @@ namespace ThAmCo.Auth.Data.Account
     {
         public AccountDbContext(DbContextOptions<AccountDbContext> options) : base(options)
         {
+            Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
